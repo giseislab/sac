@@ -115,7 +115,6 @@ classdef sacfile
       function bool = hasCorrectMachineformat(obj,FID)
          p = ftell(FID);
          headerversion = obj.headerDesc(obj.sacformat, 'NVHDR');
-         %targfield = headerversion(strcmp({headerversion.name},'NVHDR'));
          fseek(FID,targfield.pos,'bof');
          NVHDR = fread(FID, headerversion.count, headerversion.datatype);
          bool = NVHDR < 10;
@@ -154,14 +153,13 @@ classdef sacfile
          for n = 1 : numel(B{1})
             fields(n).pos = B{1}(n); % offset in file
             fields(n).count = B{2}(n); % number of elements to read
-            fields(n).datatype = B{3}{n}; %datatype read from disk
+            fields(n).datatype = B{3}{n}; % datatype read from disk
             fields(n).name = B{4}{n};
          end
          if exist('fieldname','var')
             fields = fields(strcmp({fields.name},fieldname));
          end
       end
-   
    end
    
 end
